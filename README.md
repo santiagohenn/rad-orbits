@@ -12,16 +12,18 @@ offering an adaptable tool for the study of radiation impacts. Two use cases are
 and a dual-satellite mission to evaluate ISL radiation effects. Simulation results demonstrate the effectiveness of the 
 proposed approach in covering radiation-prone regions with different densities, offering valuable data for radiation studies in space environments.
 
-### Relevant papers
+### Relevant papers and info
 
 * https://ieeexplore.ieee.org/document/8714006
 * Finlay, C.C., Kloss, C., Olsen, N. et al. The CHAOS-7 geomagnetic field model and observed changes in the South Atlantic Anomaly. Earth Planets Space 72, 156 (2020). https://doi.org/10.1186/s40623-020-01252-9
 * https://www.researchgate.net/publication/234501202_KML_generator_to_visualize_geomagnetic_field_models_on_Google_Earth
 * https://www.sciencedirect.com/science/article/pii/S1364682617303887
+* IGRF: https://es.wikipedia.org/wiki/Campo_de_referencia_geomagnético_internacional
 
 ### Datasets
 
 * https://www.ncei.noaa.gov/products/earth-magnetic-model-anomaly-grid-2
 * https://www.mathworks.com/matlabcentral/fileexchange/120308-geomagnetic-field-intensity-data
 * https://geomag.bgs.ac.uk/education/earthmag.html
-* https://www.ngdc.noaa.gov/geomag/magfield-wist/
+* (IGRF) https://www.ngdc.noaa.gov/geomag/magfield-wist/
+* (IGRF) https://www.ncei.noaa.gov/products/international-geomagnetic-reference-field
