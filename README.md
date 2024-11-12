@@ -27,3 +27,22 @@ proposed approach in covering radiation-prone regions with different densities, 
 * https://geomag.bgs.ac.uk/education/earthmag.html
 * (IGRF) https://www.ngdc.noaa.gov/geomag/magfield-wist/
 * (IGRF) https://www.ncei.noaa.gov/products/international-geomagnetic-reference-field
+
+### Workflow
+
+1. Translate Earth's magnetic field datasets (usually grid-based data, e.g. latitude, longitude, value) into contour polygons at certain thresholds, achieved by magfield2polygons.py. Output looks like the following Figure (obtained using plot_mag_field.py). The Figure depicts two polygons at 25uT and 30uT, envolving what is known as the South Atlantic Anomaly. <br><br>
+![Magnetic Field Plot](./img/output.jpg)
+
+2. [WIP] Define Orbits' solution space and scenario parameters: time-span, propagators, atmosphere models, Earth's shape model.
+
+3. [WIP] Iterate over Orbits' solution space and simulate satellite-polygon interaction, obtaining access metrics: total access time, access frequency, etc.
+
+#### Python Dependencies
+```
+pandas, geopandas, matplotlib, shapely, descartes, seaborn, geojson, scipy
+```
+
+#### Java Dependencies
+```
+satellite-tools, constellation-toolkit, orekit
+```

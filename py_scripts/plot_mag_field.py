@@ -12,8 +12,8 @@ import seaborn as sns
 color_palette = sns.color_palette("rocket")
 fig = plt.figure(figsize=(10, 6))
 
-# Load the data from CSV
-data = pd.read_csv('C:/Projects/rad-orbits/datasets/F_map_mf_2020/F_Grid_2020.csv')  # Replace 'data.csv' with your file path
+# Load the data from CSV, here I took the latest data from NASA
+data = pd.read_csv('./datasets/F_map_mf_2020/F_Grid_2020.csv')
 
 # Extract latitude, longitude, and mag field values
 latitudes = data['lat'].values
@@ -22,14 +22,9 @@ values = data['mag_field'].values
 
 # World plot
 ax = fig.add_subplot()
-
 sc = ax.scatter(longitudes, latitudes, c=values, cmap='jet', s=10, alpha=0.6)
 plt.colorbar(sc, label='nT', shrink=0.6)
-
-# Low res world map case7\coverage-aware\ne_polygons_73d575dcc86cf4911d290f7444b308be57c90c8534b86d8eeb86239284f6f043_1.json
-world = gpd.read_file("C:/Projects/rad-orbits/datasets/countries/ne_110m_admin_0_countries.shp")
-
-# Basic worldmap
+world = gpd.read_file("./datasets/countries/ne_110m_admin_0_countries.shp")
 world.plot(
     ax=ax,
     color="lightgray",
@@ -39,7 +34,7 @@ world.plot(
 )
 
 # Load the JSON file containing the polygons
-with open('polygons.json', 'r') as f:
+with open('outputs/polygons.json', 'r') as f:
     polygons = json.load(f)
 
 # Define the levels you want to plot
@@ -67,5 +62,5 @@ plt.xlabel('Longitude [Degrees]')
 plt.ylabel('Latitude [Degrees]')
 plt.tight_layout()
 plt.title('Earth Magnetic Field [nT]')
-plt.savefig('saa_overview.pdf', format='pdf', bbox_inches='tight')
+plt.savefig('outputs/saa_overview.pdf', format='pdf', bbox_inches='tight')
 plt.show()

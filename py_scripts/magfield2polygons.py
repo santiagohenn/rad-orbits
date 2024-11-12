@@ -6,8 +6,8 @@ import geojson
 from scipy.interpolate import griddata
 from shapely.geometry import Polygon, mapping
 
-# Load your data
-data = pd.read_csv('C:/Projects/rad-orbits/datasets/F_map_mf_2020/F_Grid_2020.csv')  # Replace 'data.csv' with your file path
+# Load mf data
+data = pd.read_csv('./datasets/F_map_mf_2020/F_Grid_2020.csv')
 latitudes = data['lat'].values
 longitudes = data['lon'].values
 values = data['mag_field'].values
@@ -34,5 +34,5 @@ for i, collection in enumerate(contour_set.collections):
             poly = Polygon(path.vertices)
             polygons.append({"geometry": mapping(poly), "level": level})
 
-with open('polygons.json', 'w') as f:
+with open('outputs/polygons.json', 'w') as f:
     geojson.dump(polygons, f)
