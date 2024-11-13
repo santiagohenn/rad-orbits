@@ -22,6 +22,7 @@ proposed approach in covering radiation-prone regions with different densities, 
 * https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2022JA031202
 * Proba V EPT: https://register-as.oma.be/esww16/contributions/public/S11-P1/S11-P1-05-BorisovStanislav/ESWW2019_EPTprod_v1.pdf
 * Proba V EPT: https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2022JA031202
+* https://www.aeronomie.be/en/annual-report/radiation-belts-observed-proba-vept
 
 ### Datasets
 
@@ -38,7 +39,9 @@ proposed approach in covering radiation-prone regions with different densities, 
 ### Workflow
 
 1. Translate Earth's magnetic field datasets (usually grid-based data, e.g. latitude, longitude, value) into contour polygons at certain thresholds, achieved by magfield2polygons.py. Output looks like the following Figure (obtained using plot_mag_field.py). The Figure depicts two polygons at 25uT and 30uT, envolving what is known as the South Atlantic Anomaly. <br><br>
-![Magnetic Field Plot](./img/output.jpg)
+![Magnetic Field Plot](./img/output_mf.jpg)
+[update] We can also transpate trapped particle models (Spenvis), for which data is adapted using tpo2polygons.py, and plotted with plot_tpo.py: <br><br>
+![Magnetic Field Plot](./img/output_tpo.jpg)
 
 2. [WIP] Define Orbits' solution space and scenario parameters: time-span, propagators, atmosphere models, Earth's shape model.
 

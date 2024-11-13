@@ -34,7 +34,7 @@ world.plot(
 )
 
 # Load the JSON file containing the polygons
-with open('outputs/polygons.json', 'r') as f:
+with open('outputs/polygons_mf.json', 'r') as f:
     polygons = json.load(f)
 
 # Define the levels you want to plot

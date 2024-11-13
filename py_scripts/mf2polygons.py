@@ -6,6 +6,8 @@ import geojson
 from scipy.interpolate import griddata
 from shapely.geometry import Polygon, mapping
 
+print("Loading dataset.")
+
 # Load mf data
 data = pd.read_csv('./datasets/F_map_mf_2020/F_Grid_2020.csv')
 latitudes = data['lat'].values
@@ -17,6 +19,8 @@ num_bins = 120
 lon_grid = np.linspace(min(longitudes), max(longitudes), num_bins)
 lat_grid = np.linspace(min(latitudes), max(latitudes), num_bins)
 grid_lon, grid_lat = np.meshgrid(lon_grid, lat_grid)
+
+print("I'm working ... this takes a while. Be patient.")
 
 # Interpolate the data to create a grid
 grid_values = griddata((longitudes, latitudes), values, (grid_lon, grid_lat), method='cubic')
@@ -34,5 +38,9 @@ for i, collection in enumerate(contour_set.collections):
             poly = Polygon(path.vertices)
             polygons.append({"geometry": mapping(poly), "level": level})
 
-with open('outputs/polygons.json', 'w') as f:
+print("Writing polygon files.")
+
+with open('outputs/polygons_mf.json', 'w') as f:
     geojson.dump(polygons, f)
+
+print("Done!.")
