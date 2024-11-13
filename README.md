@@ -19,6 +19,9 @@ proposed approach in covering radiation-prone regions with different densities, 
 * https://www.researchgate.net/publication/234501202_KML_generator_to_visualize_geomagnetic_field_models_on_Google_Earth
 * https://www.sciencedirect.com/science/article/pii/S1364682617303887
 * IGRF: https://es.wikipedia.org/wiki/Campo_de_referencia_geomagnético_internacional
+* https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2022JA031202
+* Proba V EPT: https://register-as.oma.be/esww16/contributions/public/S11-P1/S11-P1-05-BorisovStanislav/ESWW2019_EPTprod_v1.pdf
+* Proba V EPT: https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2022JA031202
 
 ### Datasets
 
@@ -27,6 +30,10 @@ proposed approach in covering radiation-prone regions with different densities, 
 * https://geomag.bgs.ac.uk/education/earthmag.html
 * (IGRF) https://www.ngdc.noaa.gov/geomag/magfield-wist/
 * (IGRF) https://www.ncei.noaa.gov/products/international-geomagnetic-reference-field
+* Solar wind (JSON): https://services.swpc.noaa.gov/products/solar-wind/
+* Satellite anomalies: https://www.ngdc.noaa.gov/stp/satellite/anomaly/satelliteanomaly.html
+* ESA's space weather: https://swe.ssa.esa.int/current-space-weather#
+* Spenvis: https://www.spenvis.oma.be
 
 ### Workflow
 
