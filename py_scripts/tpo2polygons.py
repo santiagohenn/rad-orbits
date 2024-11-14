@@ -40,11 +40,12 @@ def save_dataset_csv(file_path, rows):
         csv_writer.writerows(rows)
 
 # Change the model's height here:
-model_height_km = 800
+model_height_km = 750
+data_set_file_folder = './datasets/spenvis'
 
 # Dataset file path
-data_set_file_path = f"./datasets/spenvis/dataset_spenvis_tpo_{model_height_km}km.csv"
-data_set_grid_path = f"./datasets/spenvis/grid_spenvis_tpo_{model_height_km}km.txt"
+data_set_file_path = f"{data_set_file_folder}/spenvis_tpo_{model_height_km}km.txt"
+data_set_grid_path = f"{data_set_file_folder}/grid_spenvis_tpo_{model_height_km}km.txt"
 
 print("Transforming spenvis data to CSV dataset")
 
@@ -61,6 +62,7 @@ for row_idx, row in enumerate(grid_dataset):
 grid_dataset.insert(0, ["lat","lon","B_Gauss","L_8R_3_dE_n","Flux_cm_u-2_s_u-1_50MeV"])
 
 # Save dataset in the format we like
+data_set_file_path = data_set_file_path[:-4] + ".csv"
 save_dataset_csv(data_set_file_path, grid_dataset)
 
 # Load mf data

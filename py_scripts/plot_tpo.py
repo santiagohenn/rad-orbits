@@ -9,9 +9,9 @@ from descartes import PolygonPatch
 import seaborn as sns
 import matplotlib.colors as mcolors
 
-model_height_km = 800
+model_height_km = 750
 
-dataset_file_path = f'./datasets/spenvis/dataset_spenvis_tpo_{model_height_km}km.csv'
+dataset_file_path = f'./datasets/spenvis/spenvis_tpo_{model_height_km}km.csv'
 
 color_palette = sns.color_palette("rocket")
 fig = plt.figure(figsize=(10, 6))
