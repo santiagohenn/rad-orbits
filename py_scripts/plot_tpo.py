@@ -9,18 +9,21 @@ from descartes import PolygonPatch
 import seaborn as sns
 import matplotlib.colors as mcolors
 
+model_height_km = 800
+
+dataset_file_path = f'./datasets/spenvis/dataset_spenvis_tpo_{model_height_km}km.csv'
+
 color_palette = sns.color_palette("rocket")
 fig = plt.figure(figsize=(10, 6))
 
 # Load the data from CSV, here I took the data from spenvis
-data = pd.read_csv('./datasets/spenvis/dataset_spenvis_tpo_800km.csv')
+data = pd.read_csv(dataset_file_path)
 
 # Extract latitude, longitude, and mag field values
 latitudes = data['lat'].values
 longitudes = data['lon'].values
 # values = data['B_Gauss'].values
 values = data['Flux_cm_u-2_s_u-1_50MeV'].values
-
 
 # World plot
 ax = fig.add_subplot()
@@ -36,7 +39,7 @@ world.plot(
 )
 
 # Load the JSON file containing the polygons
-with open('outputs/polygons_tpo.json', 'r') as f:
+with open(f'outputs/polygons_tpo_{model_height_km}.json', 'r') as f:
     polygons = json.load(f)
 
 # Modify this list based on the levels you want to plot
@@ -63,6 +66,6 @@ for polygon_data in polygons:
 plt.xlabel('Longitude [Degrees]')
 plt.ylabel('Latitude [Degrees]')
 plt.tight_layout()
-plt.title('Trapped protons according to the AP-8 model, at 800Km of height')
+plt.title(f'Trapped protons according to the AP-8 model, at {model_height_km}Km of height')
 # plt.savefig('outputs/saa_overview.pdf', format='pdf', bbox_inches='tight')
 plt.show()

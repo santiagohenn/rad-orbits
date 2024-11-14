@@ -39,11 +39,18 @@ def save_dataset_csv(file_path, rows):
         csv_writer = csv.writer(file)
         csv_writer.writerows(rows)
 
+# Change the model's height here:
+model_height_km = 800
+
+# Dataset file path
+data_set_file_path = f"./datasets/spenvis/dataset_spenvis_tpo_{model_height_km}km.csv"
+data_set_grid_path = f"./datasets/spenvis/grid_spenvis_tpo_{model_height_km}km.txt"
+
 print("Transforming spenvis data to CSV dataset")
 
 # Load grid and particle datasets obtained from spenvis
-grid_dataset = read_spenvis_file("./datasets/spenvis/grid_spenvis_tpo_800km.txt",27,10916,1,3)
-particles_dataset = read_spenvis_file("./datasets/spenvis/spenvis_tpo_800km.txt",31,10920,0,3)
+grid_dataset = read_spenvis_file(data_set_grid_path,27,10916,1,3)
+particles_dataset = read_spenvis_file(data_set_file_path,31,10920,0,3)
 
 # Join grid and particles datasets:
 for row_idx, row in enumerate(grid_dataset):
@@ -54,10 +61,10 @@ for row_idx, row in enumerate(grid_dataset):
 grid_dataset.insert(0, ["lat","lon","B_Gauss","L_8R_3_dE_n","Flux_cm_u-2_s_u-1_50MeV"])
 
 # Save dataset in the format we like
-save_dataset_csv("./datasets/spenvis/dataset_spenvis_tpo_800km.csv", grid_dataset)
+save_dataset_csv(data_set_file_path, grid_dataset)
 
 # Load mf data
-data = pd.read_csv('./datasets/spenvis/dataset_spenvis_tpo_800km.csv')
+data = pd.read_csv(data_set_file_path)
 latitudes = data['lat'].values
 longitudes = data['lon'].values
 values = data['Flux_cm_u-2_s_u-1_50MeV'].values
@@ -88,7 +95,7 @@ for i, collection in enumerate(contour_set.collections):
 
 print("Writing polygon files.")
 
-with open('outputs/polygons_tpo.json', 'w') as f:
+with open(f'outputs/polygons_tpo_{model_height_km}.json', 'w') as f:
     geojson.dump(polygons, f)
 
 print("Done!.")
