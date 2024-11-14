@@ -41,7 +41,7 @@ proposed approach in covering radiation-prone regions with different densities, 
 1. Translate Earth's magnetic field datasets (usually grid-based data, e.g. latitude, longitude, value) into contour polygons at certain thresholds, achieved by magfield2polygons.py. Output looks like the following Figure (obtained using plot_mag_field.py). The Figure depicts two polygons at 25uT and 30uT, envolving what is known as the South Atlantic Anomaly. <br><br>
 ![Magnetic Field Plot](./img/output_mf.jpg)
 [update] We can also use trapped particle models (e.g. Spenvis), for which data is adapted using tpo2polygons.py, and plotted with plot_tpo.py. The figure depicts three polygons at 10, 100 and 1000 particles per cm2 per second. <br><br>
-![Magnetic Field Plot](./img/output_tpo.jpg)
+![Magnetic Field Plot](./img/output_tpo_800km.jpg)
 The magnetic field can also be plotted using Spenvis models, the required B field values are preserved in the datasets on the first data column after the coordinates. 
 
 2. [WIP] Define Orbits' solution space and scenario parameters: time-span, propagators, atmosphere models, Earth's shape model.
