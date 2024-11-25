@@ -24,11 +24,8 @@ public class App {
         String outputPath = "./outputs/analysis/";
 
 //        GeographicTools geographicTools = new GeographicTools();
-
 //        List<Satellite> satelliteList = new ArrayList<>();
-
 //        ConstellationCoverageComputer constellationCoverageComputer = new ConstellationCoverageComputer(configurationsPath);
-
 
 //        List<double[]> SAA = fileUtils.file2DoubleList("");
         List<double[]> SAA;
@@ -40,14 +37,16 @@ public class App {
         }
 
 //        double roiSurface = geographicTools.computeNonEuclideanSurface(SAA);
-
-        Log.info("Running constellation coverage over SAA ... ");
         RegionAccessComputer regionAccessComputer = new RegionAccessComputer(configurationsPath);
-        regionAccessComputer.setOutputPath(outputPath);
+        for (int inc = 45; inc < 100; inc++) {
+            Log.info("Running constellation coverage over SAA ... inc: " + inc + " degrees");
+            regionAccessComputer.setOutputPath(outputPath);
+            regionAccessComputer.getSatelliteList().get(0).getElements().setInclination(inc);
 //        regionAccessComputer.setSatelliteList(satelliteList);
-        regionAccessComputer.setROI(SAA);
-        regionAccessComputer.computeROIAccess();
-        Log.info("... done!");
+            regionAccessComputer.setROI(SAA);
+            regionAccessComputer.computeROIAccess();
+            Log.info("... done!");
+        }
 
     }
 
