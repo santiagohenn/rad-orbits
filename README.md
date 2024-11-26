@@ -67,6 +67,10 @@ inc,percentage_of_access,min_duration,max_duration,avg_duration,min_waiting_time
 * avg_waiting_time: average timespan between rad area encounters (ms)
 * frequency: total rad area encounters
 
+e.g.:
+
+!["%of access"](./img/inc_analysis_poa.jpeg)
+
 #### Python Dependencies
 ```
 pandas, geopandas, matplotlib, shapely, descartes, seaborn, geojson, scipy

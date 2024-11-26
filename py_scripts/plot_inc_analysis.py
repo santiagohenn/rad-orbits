@@ -12,12 +12,12 @@ metric_1 = "percentage_of_access"          # Example: Second metric to plot (opt
 plt.figure(figsize=(10, 6))
 
 # First metric
-plt.plot(data["inc"], data[metric_1], label="Average time within radiation zone", marker="o", linestyle="--")
+plt.plot(data["inc"], data[metric_1] * 100, label="Percentage of time within rad zone", marker="o", linestyle="--")
 
 # Customize plot
-plt.title("Metrics Plot")
+plt.title("Access to rad zone")
 plt.xlabel("Inclination [degrees]")
-plt.ylabel("Time [s]")
+plt.ylabel("Percentage [%]")
 plt.xticks(rotation=45, ha="right")  # Rotate file names for better readability
 plt.legend()
 plt.grid(True)
