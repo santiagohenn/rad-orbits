@@ -6,13 +6,13 @@ metrics_file = "./outputs/metrics_summary.csv"
 data = pd.read_csv(metrics_file)
 
 # Define the metrics to plot
-metric_1 = "avg_duration"          # Example: Second metric to plot (optional)
+metric_1 = "percentage_of_access"          # Example: Second metric to plot (optional)
 
 # Plot avg time within rad zone
 plt.figure(figsize=(10, 6))
 
 # First metric
-plt.plot(data["inc"], data[metric_1] / 1000.0, label="Average time within radiation zone", marker="o", linestyle="--")
+plt.plot(data["inc"], data[metric_1], label="Average time within radiation zone", marker="o", linestyle="--")
 
 # Customize plot
 plt.title("Metrics Plot")

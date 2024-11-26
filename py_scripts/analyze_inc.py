@@ -8,6 +8,8 @@ constellation = constellation.Constellation()
 constellation.read_from_csv("./inputs/satellites.csv")
 
 scenario_timespan_ms = 777600 * 1000
+                       # 777600000
+                       # 23567340000
 output_metrics = []
 
 for inc_idx, inc in enumerate(constellation_incs):
@@ -34,7 +36,7 @@ for inc_idx, inc in enumerate(constellation_incs):
     # Compute metrics
     metrics = {
         "inc": inc,
-        "percentage_of_access": sum(durations) / scenario_timespan_ms,
+        "percentage_of_access": ( sum(durations) / scenario_timespan_ms ),
         "min_duration": min(durations) if durations else None,
         "max_duration": max(durations) if durations else None,
         "avg_duration": sum(durations) / len(durations) if durations else None,
@@ -43,13 +45,6 @@ for inc_idx, inc in enumerate(constellation_incs):
         "avg_waiting_time": sum(waiting_times) / len(waiting_times) if waiting_times else None,
         "frequency": len(intervals),  # Number of intervals
     }
-
-    # Compute the total timeline span for access frequency
-    if intervals:
-        access_ratio = metrics["percentage_of_access"] / scenario_timespan_ms if scenario_timespan_ms > 0 else None
-        metrics["access_frequency"] = access_ratio * 100.0
-    else:
-        metrics["access_frequency"] = None
 
     #output_metrics.append([inc, metrics["percentage_of_access"], metrics["avg_duration"], metrics["min_waiting_time"], metrics["max_waiting_time"]])
     #output_metrics.append(metrics)
@@ -68,7 +63,6 @@ with open(output_file, "w", newline="") as csv_file:
         "max_waiting_time",
         "avg_waiting_time",
         "frequency",
-        "access_frequency",
     ]
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
     writer.writeheader()
