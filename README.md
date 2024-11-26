@@ -44,9 +44,28 @@ proposed approach in covering radiation-prone regions with different densities, 
 ![Magnetic Field Plot](./img/output_tpo_800km.jpg)
 The magnetic field can also be plotted using Spenvis models, the required B field values are preserved in the datasets on the first data column after the coordinates. 
 
-2. [WIP] Define Orbits' solution space and scenario parameters: time-span, propagators, atmosphere models, Earth's shape model.
+2. [WIP] Define Orbits' solution space and scenario parameters: time-span, propagators, atmosphere models, Earth's shape model. Input parameters can be found in /inputs/config.rad.orbits.properties 
 
 3. [WIP] Iterate over Orbits' solution space and simulate satellite-polygon interaction, obtaining access metrics: total access time, access frequency, etc.
+
+<br> Example case: Repeating Ground Track at ~400km of height. 8 Days repeat cycle. Outputs in metrics_summary.csv:
+```
+inc,percentage_of_access,min_duration,max_duration,avg_duration,min_waiting_time,max_waiting_time,avg_waiting_time,frequency
+45,0.0767039609053498,28000,868000,608622.4489795918,5075000,29193000,7335381.443298969,98
+46,0.07657150205761316,28000,876000,620229.1666666666,5068000,29198000,7491463.157894737,96
+47,0.07626157407407408,50000,887000,624221.052631579,5057000,29207000,7574319.14893617,95
+48,0.07611111111111112,33000,895000,629617.0212765958,5049000,35078000,7657612.903225807,94
+```
+
+* inc: orbit inclination in degrees
+* percentage_of_access: percentage of time wrt the scenario timespan (0 - 1)
+* min_duration: minimum transit through rad area (ms)
+* max_duration: maximum transit through rad area (ms)
+* avg_duration: average transit through rad area (ms)
+* min_waiting_time: minimum timespan between rad area encounters (ms)
+* max_waiting_time: maximum timespan between rad area encounters (ms)
+* avg_waiting_time: average timespan between rad area encounters (ms)
+* frequency: total rad area encounters
 
 #### Python Dependencies
 ```

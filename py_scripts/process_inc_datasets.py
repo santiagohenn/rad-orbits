@@ -15,7 +15,7 @@ for inc_idx, inc in enumerate(constellation_incs):
     
     hash = constellation.generate_hash_256()
 
-    print("Computing ",inc_idx, hash)
+    print("Processing ",inc_idx, hash)
 
     # Load JSON data from a file
     with open(f"./outputs/analysis/roi_access_metrics_{hash}.json", "r") as json_file:
