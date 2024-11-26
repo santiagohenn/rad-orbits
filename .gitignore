@@ -47,3 +47,6 @@ outputs/analysis/*.json
 
 ### Python ###
 *.pyc
+
+### Metrics ### (Ask them via drive)
+outputs/intervals/
