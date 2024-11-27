@@ -48,6 +48,9 @@ public class App {
             Log.info("... done!");
         }
 
+
+
+
     }
 
     public static ArrayList<double[]> extractCoordinates(String filePath, double requiredLevel) throws IOException {

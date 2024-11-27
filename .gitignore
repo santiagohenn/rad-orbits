@@ -50,3 +50,4 @@ outputs/analysis/*.json
 
 ### Metrics ### (Ask them via drive)
 outputs/intervals/
+analysis/
