@@ -18,7 +18,7 @@ for inc_idx, inc in enumerate(constellation_incs):
     print("Processing ",inc_idx, hash)
 
     # Load JSON data from a file
-    with open(f"./outputs/analysis/roi_access_metrics_{hash}.json", "r") as json_file:
+    with open(f"./outputs/analysis/750km/roi_access_metrics_{hash}.json", "r") as json_file:
         data = json.load(json_file)
 
     # Initialize variables
@@ -43,7 +43,7 @@ for inc_idx, inc in enumerate(constellation_incs):
         intervals.append((start_time, data[-1]["time"]))
 
     # Write intervals to a CSV file
-    with open(f"./outputs/intervals/access_intervals_{hash}.csv", "w", newline="") as csv_file:
+    with open(f"./outputs/intervals/750km/access_intervals_{hash}.csv", "w", newline="") as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(["start_time", "end_time"])  # CSV header
         writer.writerows(intervals)

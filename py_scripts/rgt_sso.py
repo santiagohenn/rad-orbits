@@ -143,8 +143,8 @@ ax.set_zlabel('inclination [°]')
 # Title
 ax.set_title('SSO w/ RGT')
 
-# for result in results:
-#     print(result[0], result[1], result[2], result[3])
+for result in results:
+    print(result[0], result[1], result[2], result[3], sep=",")
 
 # Show the plot
 plt.show()

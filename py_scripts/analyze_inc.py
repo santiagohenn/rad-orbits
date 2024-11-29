@@ -21,7 +21,7 @@ for inc_idx, inc in enumerate(constellation_incs):
 
     # Load intervals from CSV
     intervals = []
-    with open(f"./outputs/intervals/access_intervals_{hash}.csv", "r") as csv_file:
+    with open(f"./outputs/intervals/750km/access_intervals_{hash}.csv", "r") as csv_file:
         reader = csv.DictReader(csv_file)
         for row in reader:
             intervals.append((int(row["start_time"]), int(row["end_time"])))
@@ -51,7 +51,7 @@ for inc_idx, inc in enumerate(constellation_incs):
     output_metrics.append(metrics)
 
 # Save all metrics to CSV
-output_file = "./outputs/metrics_summary.csv"
+output_file = "./outputs/metrics_summary_750.csv"
 with open(output_file, "w", newline="") as csv_file:
     fieldnames = [
         "inc",
