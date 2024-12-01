@@ -51,11 +51,11 @@ public class App {
 
     public static List<double[]> getNearestModel(double height, double requiredLevel) {
 
-        double[] heights = {300, 600, 750, 800, 850, 900, 1200, 1500, 1800, 2100};
-        double nearest = heights[0];
+        int[] heights = {300, 600, 750, 800, 850, 900, 1200, 1500, 1800, 2100};
+        int nearest = heights[0];
         double minDifference = Math.abs(height - nearest);
 
-        for (double value : heights) {
+        for (int value : heights) {
             double difference = Math.abs(height - value);
             if (difference < minDifference) {
                 minDifference = difference;
