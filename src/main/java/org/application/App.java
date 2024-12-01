@@ -21,47 +21,60 @@ public class App {
 
     public static void main(String[] args) {
 
-
+        ssrgt();
 
     }
 
-    public void ssrgt() {
+    public static void ssrgt() {
 
         String configurationsPath = "./inputs/config.rad.orbits.properties";
         String outputPath = "./outputs/analysis/";
 
+        List<Satellite> allSsRgt = satellitesFromFile("./inputs/ssrgt_1030.csv");
+        RegionAccessComputer regionAccessComputer = new RegionAccessComputer(configurationsPath);
+        regionAccessComputer.setOutputPath(outputPath);
+
+        LinkedList<Satellite> currentSsRgt = new LinkedList<>();
+
+        for (Satellite sat : allSsRgt) {
+            Log.info("Running constellation coverage for sat: " + sat.getElements());
+            currentSsRgt.clear();
+            currentSsRgt.add(sat);
+            regionAccessComputer.setSatelliteList(currentSsRgt);
+            List<double[]> ROI = getNearestModel(sat.getElements().getSemiMajorAxis() - 6731.0, 100);
+            regionAccessComputer.setROI(ROI);
+            regionAccessComputer.computeROIAccess();
+            Log.info("... done!");
+        }
+
+    }
+
+    public static List<double[]> getNearestModel(double height, double requiredLevel) {
+
+        double[] heights = {300, 600, 750, 800, 850, 900, 1200, 1500, 1800, 2100};
+        double nearest = heights[0];
+        double minDifference = Math.abs(height - nearest);
+
+        for (double value : heights) {
+            double difference = Math.abs(height - value);
+            if (difference < minDifference) {
+                minDifference = difference;
+                nearest = value;
+            }
+        }
+
+        Log.info("Satellite height: " + height + " - Nearest model: " + nearest);
+
+        String path = "./outputs/polygons_tpo_" + nearest + ".json";
         List<double[]> SAA;
         try {
-            SAA = App.extractCoordinates("./outputs/polygons_tpo_750.json", 100);
+            SAA = App.extractCoordinates(path, requiredLevel);
         } catch (IOException e) {
             Log.error("Error trying to load polygon: " + e.getMessage());
             throw new RuntimeException(e);
         }
 
-        List<Satellite> allSsRgt = satellitesFromFile("./inputs/ssrgt_1030.csv");
-        RegionAccessComputer regionAccessComputer = new RegionAccessComputer(configurationsPath);
-
-        LinkedList<Satellite> currentSsRgt = new LinkedList<>();
-
-        for (Satellite sat : allSsRgt) {
-            currentSsRgt.clear();
-            currentSsRgt.add(sat);
-            regionAccessComputer.setSatelliteList(currentSsRgt);
-            regionAccessComputer.setROI(SAA);
-            regionAccessComputer.computeROIAccess();
-        }
-
-
-
-        for (int inc = 45; inc < 100; inc++) {
-            Log.info("Running constellation coverage over SAA ... inc: " + inc + " degrees");
-            regionAccessComputer.setOutputPath(outputPath);
-            regionAccessComputer.getSatelliteList().get(0).getElements().setInclination(inc);
-//        regionAccessComputer.setSatelliteList(satelliteList);
-            regionAccessComputer.setROI(SAA);
-            regionAccessComputer.computeROIAccess();
-            Log.info("... done!");
-        }
+        return SAA;
 
     }
 
