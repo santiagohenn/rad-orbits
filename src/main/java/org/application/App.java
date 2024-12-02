@@ -36,7 +36,7 @@ public class App {
 
         LinkedList<Satellite> currentSsRgt = new LinkedList<>();
 
-        for (Satellite sat : allSsRgt) {
+        for (Satellite sat : allSsRgt.subList(188, allSsRgt.size())) {
             Log.info("Running constellation coverage for sat: " + sat.getElements());
             currentSsRgt.clear();
             currentSsRgt.add(sat);
