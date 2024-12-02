@@ -9,7 +9,8 @@ from descartes import PolygonPatch
 import seaborn as sns
 import matplotlib.colors as mcolors
 
-model_height_km = 300
+model_height_km = 2100
+plot_polygons = False
 
 dataset_file_path = f'./datasets/spenvis/spenvis_tpo_{model_height_km}km.csv'
 
@@ -38,34 +39,36 @@ world.plot(
     legend=True
 )
 
-# Load the JSON file containing the polygons
-with open(f'outputs/polygons_tpo_{model_height_km}.json', 'r') as f:
-    polygons = json.load(f)
+if plot_polygons:
 
-# Modify this list based on the levels you want to plot
-levels_to_plot = [10.0, 100.0, 1000.0]  
+    # Load the JSON file containing the polygons
+    with open(f'outputs/polygons_tpo_{model_height_km}.json', 'r') as f:
+        polygons = json.load(f)
 
-# Filter and plot polygons
-color_counter = 0
-for polygon_data in polygons:
-    level = polygon_data.get("level")
-    if level in levels_to_plot:
-        try:
-            # Extract the coordinates of the polygon
-            coordinates = polygon_data['geometry']['coordinates'][0]  # Use only the exterior ring
+    # Modify this list based on the levels you want to plot
+    levels_to_plot = [10.0, 100.0, 1000.0]  
 
-            # Create a Polygon patch with no fill
-            outline_patch = mpatches.Polygon(coordinates, closed=True, edgecolor='black', fill=False, linewidth=1.5)
-            ax.add_patch(outline_patch)
-            color_counter = color_counter + 1
+    # Filter and plot polygons
+    color_counter = 0
+    for polygon_data in polygons:
+        level = polygon_data.get("level")
+        if level in levels_to_plot:
+            try:
+                # Extract the coordinates of the polygon
+                coordinates = polygon_data['geometry']['coordinates'][0]  # Use only the exterior ring
 
-        except (IndexError, TypeError, KeyError) as e:
-            print(f"Skipping a polygon due to error: {e}")
+                # Create a Polygon patch with no fill
+                outline_patch = mpatches.Polygon(coordinates, closed=True, edgecolor='black', fill=False, linewidth=1.5)
+                ax.add_patch(outline_patch)
+                color_counter = color_counter + 1
+
+            except (IndexError, TypeError, KeyError) as e:
+                print(f"Skipping a polygon due to error: {e}")
 
 # Show the plot
 plt.xlabel('Longitude [Degrees]')
 plt.ylabel('Latitude [Degrees]')
 plt.tight_layout()
 plt.title(f'Trapped protons according to the AP-8 model, at {model_height_km}Km of height')
-# plt.savefig('outputs/saa_overview.pdf', format='pdf', bbox_inches='tight')
+plt.savefig(f'outputs/img/trapped_protons_{model_height_km}.png', format='png', bbox_inches='tight')
 plt.show()

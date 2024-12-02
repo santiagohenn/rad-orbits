@@ -3,7 +3,7 @@ from structures import constellation
 import numpy as np
 
 folder = "ssrgt_1030"
-scenario_timespan_ms = 777600 * 1000
+scenario_timespan_ms = 864000 * 1000
 
 all_satellites = constellation.Constellation()
 all_satellites.read_from_csv(f"./inputs/{folder}.csv")

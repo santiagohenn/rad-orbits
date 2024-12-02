@@ -11,15 +11,17 @@ fig = plt.figure()
 
 color_palette = sns.color_palette("rocket")
 
+data = pd.DataFrame.filter(lambda entry: entry["height"] < (6371 + 1200), data)
+
 ax = fig.add_subplot(111, projection='3d')
 scatter = ax.scatter(
     data["ND"], 
     data["height"], 
     data["inc"], 
-    c=data["percentage_of_access"],
+    c=data["avg_duration"],
     cmap="jet",
     marker='o', 
-    s=2
+    s=6
 )
 
 # Reverse the x-axis direction
@@ -42,4 +44,3 @@ colorbar.set_label("Perc. of Access")  # Label for the colorbar
 
 # Show the plot
 plt.show()
-
