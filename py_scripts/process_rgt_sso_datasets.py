@@ -7,7 +7,7 @@ all_satellites = constellation.Constellation()
 all_satellites.read_from_csv("./inputs/ssrgt_1030.csv")
 folder = "ssrgt_1030"
 
-for satellite in constellation.satellites:
+for satellite in all_satellites.satellites:
 
     # I'm dealing with just one satellite but need the constellation obj to get the hash
     current_constellation = constellation.Constellation()

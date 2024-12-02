@@ -17,7 +17,7 @@ with open(f"./inputs/ssrgt_order.csv", "r") as csv_file:
 
 output_metrics = []
 
-for sat_idx, satellite in enumerate(constellation.satellites):
+for sat_idx, satellite in enumerate(all_satellites.satellites):
 
     # I'm dealing with just one satellite but need the constellation obj to get the hash
     current_constellation = constellation.Constellation()
