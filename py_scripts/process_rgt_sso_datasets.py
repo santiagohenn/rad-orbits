@@ -7,6 +7,8 @@ all_satellites = constellation.Constellation()
 all_satellites.read_from_csv("./inputs/ssrgt_1030.csv")
 folder = "ssrgt_1030"
 
+tpo_threshold = 100.0
+
 for satellite in all_satellites.satellites:
 
     # I'm dealing with just one satellite but need the constellation obj to get the hash
@@ -29,7 +31,7 @@ for satellite in all_satellites.satellites:
         time = entry["time"]
         metric = entry["metrics"][0]  # Assuming "metrics" always has at least one element
         
-        if metric == 1.0:
+        if metric >= tpo_threshold:
             if start_time is None:
                 start_time = time  # Start a new interval
         else:

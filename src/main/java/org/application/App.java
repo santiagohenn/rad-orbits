@@ -10,6 +10,7 @@ import constellation.tools.geometry.GeographicTools;
 import constellation.tools.utilities.FileUtils;
 import satellite.tools.assets.entities.Satellite;
 import satellite.tools.utils.Log;
+import satellite.tools.utils.Utils;
 
 import java.io.*;
 import java.lang.reflect.Array;
@@ -21,7 +22,32 @@ public class App {
 
     public static void main(String[] args) {
 
-        ssrgt();
+//        ssrgt();
+        ssrgt2();
+
+    }
+
+    public static void ssrgt2() {
+
+        String configurationsPath = "./inputs/config.rad.orbits.properties";
+        String outputPath = "E:/rad-orbits/outputs/analysis/";
+
+        List<Satellite> allSsRgt = satellitesFromFile("./inputs/ssrgt_1030.csv");
+        RegionAccessComputer regionAccessComputer = new RegionAccessComputer(configurationsPath);
+        regionAccessComputer.setOutputPath(outputPath);
+
+        LinkedList<Satellite> currentSsRgt = new LinkedList<>();
+
+        for (Satellite sat : allSsRgt.subList(188, allSsRgt.size())) {
+            Log.info("Running constellation coverage for sat: " + sat.getElements());
+            currentSsRgt.clear();
+            currentSsRgt.add(sat);
+            regionAccessComputer.setSatelliteList(currentSsRgt);
+            List<double[]> ROI = getNearestSimplifiedModel(sat.getElements().getSemiMajorAxis() - 6731.0, 100);
+            regionAccessComputer.setROI(ROI);
+            regionAccessComputer.computeROMetrics();
+            Log.info("... done!");
+        }
 
     }
 
@@ -36,7 +62,7 @@ public class App {
 
         LinkedList<Satellite> currentSsRgt = new LinkedList<>();
 
-        for (Satellite sat : allSsRgt.subList(188, allSsRgt.size())) {
+        for (Satellite sat : allSsRgt) {
             Log.info("Running constellation coverage for sat: " + sat.getElements());
             currentSsRgt.clear();
             currentSsRgt.add(sat);
@@ -46,6 +72,32 @@ public class App {
             regionAccessComputer.computeROIAccess();
             Log.info("... done!");
         }
+
+    }
+
+    public static List<double[]> getNearestSimplifiedModel(double height, double requiredLevel) {
+
+        int[] heights = {300, 600, 750, 800, 850, 900, 1200, 1500, 1800, 2100};
+        int nearest = heights[0];
+        double minDifference = Math.abs(height - nearest);
+
+        for (int value : heights) {
+            double difference = Math.abs(height - value);
+            if (difference < minDifference) {
+                minDifference = difference;
+                nearest = value;
+            }
+        }
+
+        Log.info("Satellite height: " + height + " - Nearest model: " + nearest);
+
+        String path = "./datasets/spenvis/simplified/spenvis_tpo_" + nearest + "km.csv";
+        FileUtils fu = new FileUtils(path);
+        List<double[]> SAA = readCsvToDoubleArray(path);
+//        SAA = fu.file2DoubleList(path);
+        // SAA = App.extractCoordinates(path, requiredLevel);
+
+        return SAA;
 
     }
 
@@ -174,6 +226,31 @@ public class App {
         }
 
         return satelliteList;
+    }
+
+    public static List<double[]> readCsvToDoubleArray(String filePath) {
+        List<double[]> data = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Split the line by commas
+                String[] values = line.split(",");
+
+                // Convert string values to doubles
+                double[] row = new double[values.length];
+                for (int i = 0; i < values.length; i++) {
+                    row[i] = Double.parseDouble(values[i].trim());
+                }
+
+                // Add the row to the list
+                data.add(row);
+            }
+        } catch (IOException e) {
+            Log.error("Unable to read file: " + filePath);
+        }
+
+        return data;
     }
 
 
