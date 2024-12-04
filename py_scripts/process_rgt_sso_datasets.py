@@ -5,7 +5,7 @@ import csv
 
 all_satellites = constellation.Constellation()
 all_satellites.read_from_csv("./inputs/ssrgt_1030.csv")
-folder = "ssrgt_1030"
+folder = "ssrgt_1030_AP8"
 
 tpo_threshold = 100.0
 

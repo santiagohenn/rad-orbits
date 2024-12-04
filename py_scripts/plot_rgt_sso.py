@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the metrics CSV
-metrics_file = "./outputs/metrics_summary_ssrgt_1030.csv"
+metrics_file = "./outputs/metrics_summary_ssrgt_1030_AP8.csv"
 data = pd.read_csv(metrics_file)
 
 # Create a 3D scatter plot
@@ -18,7 +18,7 @@ scatter = ax.scatter(
     data["ND"], 
     data["height"], 
     data["inc"], 
-    c=data["avg_duration"],
+    c=data["percentage_of_access"]*100.0,
     cmap="jet",
     marker='o', 
     s=6
