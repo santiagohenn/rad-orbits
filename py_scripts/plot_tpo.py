@@ -9,7 +9,7 @@ from descartes import PolygonPatch
 import seaborn as sns
 import matplotlib.colors as mcolors
 
-model_height_km = 1500
+model_height_km = 2100
 plot_polygons = False
 
 dataset_file_path = f'./datasets/spenvis/spenvis_tpo_{model_height_km}km.csv'
@@ -26,9 +26,11 @@ longitudes = data['lon'].values
 # values = data['B_Gauss'].values
 values = data['Flux_cm_u-2_s_u-1_50MeV'].values
 
+color_norm = mcolors.LogNorm(vmin=1, vmax=1e4)
+
 # World plot
 ax = fig.add_subplot()
-sc = ax.scatter(longitudes, latitudes, c=values, cmap='jet', s=15, alpha=0.6, marker="s", norm=mcolors.LogNorm())
+sc = ax.scatter(longitudes, latitudes, c=values, cmap='jet', s=15, alpha=0.6, marker="s", norm=color_norm)
 plt.colorbar(sc, label=r'$\text{AP-8 MAX Flux } \, in \, \text{MeV (cm}^{-2} \, \text{s}^{-1})$', shrink=0.6)
 world = gpd.read_file("./datasets/countries/ne_110m_admin_0_countries.shp")
 world.plot(

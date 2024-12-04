@@ -18,7 +18,7 @@ scatter = ax.scatter(
     data["ND"], 
     data["height"], 
     data["inc"], 
-    c=data["percentage_of_access"]*100.0,
+    c=data["avg_duration"]/(1000.0*60.0),
     cmap="jet",
     marker='o', 
     s=6
@@ -33,8 +33,8 @@ ax.set_ylabel('Orbit height [km]')
 ax.set_zlabel('inclination [°]')
 
 # Title
+# ax.set_title(r"Average time until a $100 \, \frac{MeV}{s \, cm^{2}}$ is encountered, in minutes")
 ax.set_title(r"$\text{Percentage of access to a} > 100.00 \, \text{MeV cm}^{-2} \, \text{s}^{-1} \, \text{region}$" "\n" r"$\text{for SSO orbits w/ RGT}$")
-
 
 plt.tight_layout()
 
@@ -42,6 +42,7 @@ plt.tight_layout()
 
 colorbar = fig.colorbar(scatter, ax=ax, shrink=0.5, aspect=10, pad=0.1)
 colorbar.set_label("Perc. of Access")  # Label for the colorbar
+# colorbar.set_label("Minutes")  # Label for the colorbar
 
 # Show the plot
 plt.show()
