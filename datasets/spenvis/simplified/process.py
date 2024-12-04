@@ -12,8 +12,7 @@ for file_name in os.listdir(current_dir):
         # Read the CSV file into a DataFrame
         df = pd.read_csv(file_path)
         
-        # Identify columns to drop (3rd and 5th columns are at index 2 and 4)
-        columns_to_drop = [df.columns[2], df.columns[4]]
+        columns_to_drop = [df.columns[2], df.columns[3]]
         
         # Drop the specified columns
         df = df.drop(columns=columns_to_drop)

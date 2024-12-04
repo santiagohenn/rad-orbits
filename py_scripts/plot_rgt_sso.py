@@ -11,7 +11,7 @@ fig = plt.figure()
 
 color_palette = sns.color_palette("rocket")
 
-data = pd.DataFrame.filter(lambda entry: entry["height"] < (6371 + 1200), data)
+# data = pd.DataFrame.filter(lambda entry: entry["height"] < (6371 + 1200), data)
 
 ax = fig.add_subplot(111, projection='3d')
 scatter = ax.scatter(

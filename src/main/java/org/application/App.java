@@ -38,15 +38,18 @@ public class App {
 
         LinkedList<Satellite> currentSsRgt = new LinkedList<>();
 
-        for (Satellite sat : allSsRgt.subList(188, allSsRgt.size())) {
+        int counter = 1;
+        for (Satellite sat : allSsRgt) {
             Log.info("Running constellation coverage for sat: " + sat.getElements());
             currentSsRgt.clear();
             currentSsRgt.add(sat);
             regionAccessComputer.setSatelliteList(currentSsRgt);
-            List<double[]> ROI = getNearestSimplifiedModel(sat.getElements().getSemiMajorAxis() - 6731.0, 100);
+            List<double[]> ROI = getNearestSimplifiedModel(sat.getElements().getSemiMajorAxis() - 6371.0, 100);
             regionAccessComputer.setROI(ROI);
             regionAccessComputer.computeROMetrics();
             Log.info("... done!");
+            Log.info(counter + "/" + allSsRgt.size());
+            counter++;
         }
 
     }
