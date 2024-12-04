@@ -28,18 +28,19 @@ scatter = ax.scatter(
 ax.invert_xaxis()
 
 # Set axis labels
-ax.set_xlabel('ND')
+ax.set_xlabel('ND (days until orbit repeats)')
 ax.set_ylabel('Orbit height [km]')
 ax.set_zlabel('inclination [°]')
 
 # Title
-ax.set_title('SSO w/ RGT')
+ax.set_title(r"$\text{Percentage of access to a} > 100.00 \, \text{MeV cm}^{-2} \, \text{s}^{-1} \, \text{region}$" "\n" r"$\text{for SSO orbits w/ RGT}$")
+
 
 plt.tight_layout()
 
 # Add a colorbar
 
-colorbar = fig.colorbar(scatter, ax=ax, shrink=0.5, aspect=10)
+colorbar = fig.colorbar(scatter, ax=ax, shrink=0.5, aspect=10, pad=0.1)
 colorbar.set_label("Perc. of Access")  # Label for the colorbar
 
 # Show the plot

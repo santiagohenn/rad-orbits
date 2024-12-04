@@ -9,7 +9,7 @@ from descartes import PolygonPatch
 import seaborn as sns
 import matplotlib.colors as mcolors
 
-model_height_km = 2100
+model_height_km = 1500
 plot_polygons = False
 
 dataset_file_path = f'./datasets/spenvis/spenvis_tpo_{model_height_km}km.csv'
@@ -29,7 +29,7 @@ values = data['Flux_cm_u-2_s_u-1_50MeV'].values
 # World plot
 ax = fig.add_subplot()
 sc = ax.scatter(longitudes, latitudes, c=values, cmap='jet', s=15, alpha=0.6, marker="s", norm=mcolors.LogNorm())
-plt.colorbar(sc, label=r'$\text{AP-8 MAX Flux } > \, 50.00 \, \text{MeV (cm}^{-2} \, \text{s}^{-1}) \text{ at 800.0 km}$', shrink=0.6)
+plt.colorbar(sc, label=r'$\text{AP-8 MAX Flux } \, in \, \text{MeV (cm}^{-2} \, \text{s}^{-1})$', shrink=0.6)
 world = gpd.read_file("./datasets/countries/ne_110m_admin_0_countries.shp")
 world.plot(
     ax=ax,
@@ -71,4 +71,5 @@ plt.ylabel('Latitude [Degrees]')
 plt.tight_layout()
 plt.title(f'Trapped protons according to the AP-8 model, at {model_height_km}Km of height')
 plt.savefig(f'outputs/img/trapped_protons_{model_height_km}.png', format='png', bbox_inches='tight')
+plt.savefig(f'outputs/img/trapped_protons_{model_height_km}.pdf', format='pdf', bbox_inches='tight')
 plt.show()
