@@ -40,7 +40,7 @@ def save_dataset_csv(file_path, rows):
         csv_writer.writerows(rows)
 
 # Change the model's height here:
-model_height_km = 350
+model_height_km = 950
 data_set_file_folder = './datasets/spenvis'
 
 # Dataset file path

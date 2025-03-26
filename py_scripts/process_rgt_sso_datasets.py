@@ -19,7 +19,7 @@ for satellite in all_satellites.satellites:
     print("Processing ", hash)
 
     # Load JSON data from a file
-    with open(f"E:/rad-orbits/outputs/analysis/{folder}/roi_access_metrics_{hash}.json", "r") as json_file:
+    with open(f"D:/rad-orbits/outputs/analysis/{folder}/roi_access_metrics_{hash}.json", "r") as json_file:
         data = json.load(json_file)
 
     # Initialize variables

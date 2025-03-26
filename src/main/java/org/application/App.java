@@ -30,7 +30,7 @@ public class App {
     public static void ssrgt2() {
 
         String configurationsPath = "./inputs/config.rad.orbits.properties";
-        String outputPath = "E:/rad-orbits/outputs/analysis/";
+        String outputPath = "D:/rad-orbits/outputs/analysis/";
 
         List<Satellite> allSsRgt = satellitesFromFile("./inputs/ssrgt_1030.csv");
         RegionAccessComputer regionAccessComputer = new RegionAccessComputer(configurationsPath);

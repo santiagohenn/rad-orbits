@@ -39,28 +39,28 @@ def save_dataset_csv(file_path, rows):
         csv_writer = csv.writer(file)
         csv_writer.writerows(rows)
 
-# Change the model's height here:
-model_height_km = 700
 data_set_file_folder = './datasets/spenvis'
 
-# Dataset file path
-data_set_file_path = f"{data_set_file_folder}/spenvis_tpo_{model_height_km}km.txt"
-data_set_grid_path = f"{data_set_file_folder}/grid_spenvis_tpo_{model_height_km}km.txt"
+for model_height_km in range(1000, 2101, 50):
 
-print("Transforming spenvis data to CSV dataset")
+    # Dataset file path
+    data_set_file_path = f"{data_set_file_folder}/spenvis_tpo_{model_height_km}km.txt"
+    data_set_grid_path = f"{data_set_file_folder}/grid_spenvis_tpo_{model_height_km}km.txt"
 
-# Load grid and particle datasets obtained from spenvis
-grid_dataset = read_spenvis_file(data_set_grid_path,27,10916,1,3)
-particles_dataset = read_spenvis_file(data_set_file_path,31,10920,0,3)
+    print("Transforming spenvis data to CSV dataset")
 
-# Join grid and particles datasets:
-for row_idx, row in enumerate(grid_dataset):
-    for particle_metric in particles_dataset[row_idx]:
-        row.append(particle_metric)
+    # Load grid and particle datasets obtained from spenvis
+    grid_dataset = read_spenvis_file(data_set_grid_path,27,10916,1,3)
+    particles_dataset = read_spenvis_file(data_set_file_path,31,10920,0,3)
 
-# Add headers
-grid_dataset.insert(0, ["lat","lon","B_Gauss","L_8R_3_dE_n","Flux_cm_u-2_s_u-1_50MeV"])
+    # Join grid and particles datasets:
+    for row_idx, row in enumerate(grid_dataset):
+        for particle_metric in particles_dataset[row_idx]:
+            row.append(particle_metric)
 
-# Save dataset in the format we like
-data_set_file_path = data_set_file_path[:-4] + ".csv"
-save_dataset_csv(data_set_file_path, grid_dataset)
+    # Add headers
+    grid_dataset.insert(0, ["lat","lon","B_Gauss","L_8R_3_dE_n","Flux_cm_u-2_s_u-1_50MeV"])
+
+    # Save dataset in the format we like
+    data_set_file_path = data_set_file_path[:-4] + ".csv"
+    save_dataset_csv(data_set_file_path, grid_dataset)
