@@ -9,7 +9,7 @@ from descartes import PolygonPatch
 import seaborn as sns
 import matplotlib.colors as mcolors
 
-model_height_km = 2100
+model_height_km = 350
 plot_polygons = False
 
 dataset_file_path = f'./datasets/spenvis/spenvis_tpo_{model_height_km}km.csv'

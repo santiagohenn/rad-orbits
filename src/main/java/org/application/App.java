@@ -24,7 +24,7 @@ public class App {
 
 //        ssrgt();
         ssrgt2();
-
+//        sweepInc2();
     }
 
     public static void ssrgt2() {
@@ -50,6 +50,55 @@ public class App {
             Log.info("... done!");
             Log.info(counter + "/" + allSsRgt.size());
             counter++;
+        }
+
+    }
+
+    public static void ssrgt3() {
+
+        String configurationsPath = "./inputs/config.rad.orbits.properties";
+        String outputPath = "E:/rad-orbits/outputs/analysis/";
+
+        List<Satellite> allSsRgt = satellitesFromFile("./inputs/ssrgt_constellation.csv");
+        RegionAccessComputer regionAccessComputer = new RegionAccessComputer(configurationsPath);
+        regionAccessComputer.setOutputPath(outputPath);
+
+        int counter = 1;
+        for (Satellite sat : allSsRgt) {
+            Log.info("Running constellation coverage for sat: " + sat.getElements());
+            List<double[]> ROI = getNearestSimplifiedModel(sat.getElements().getSemiMajorAxis() - 6371.0, 100);
+            regionAccessComputer.setROI(ROI);
+            regionAccessComputer.computeROMetrics();
+            Log.info("... done!");
+            Log.info(counter + "/" + allSsRgt.size());
+            counter++;
+        }
+
+    }
+
+    public static void sweepInc2() {
+
+        List<Satellite> satellites = satellitesFromFile("./inputs/ssrgt_single.csv");
+
+        String configurationsPath = "./inputs/config.rad.orbits.properties";
+        String outputPath = "E:/rad-orbits/outputs/analysis/";
+
+        List<double[]> SAA;
+
+        RegionAccessComputer regionAccessComputer = new RegionAccessComputer(configurationsPath);
+        regionAccessComputer.setSatelliteList(satellites);
+
+        for (double inc = 0; inc < 100; inc = inc + 5) {
+            for (double sma = 300 + 6371; sma < 2000 + 6371; sma = sma + 200) {
+                Log.info("Running constellation coverage over SAA ... inc: " + inc + " ° and sma = " + sma);
+                regionAccessComputer.setOutputPath(outputPath);
+                regionAccessComputer.getSatelliteList().get(0).getElements().setInclination(inc);
+                regionAccessComputer.getSatelliteList().get(0).getElements().setSemiMajorAxis(sma);
+                SAA = getNearestSimplifiedModel(sma - 6371, 100.0);
+                regionAccessComputer.setROI(SAA);
+                regionAccessComputer.computeROMetrics();
+                Log.info("... done!");
+            }
         }
 
     }
@@ -80,7 +129,7 @@ public class App {
 
     public static List<double[]> getNearestSimplifiedModel(double height, double requiredLevel) {
 
-        int[] heights = {300, 600, 750, 800, 850, 900, 1200, 1500, 1800, 2100};
+        int[] heights = {300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 1200, 1500, 1800, 2100};
         int nearest = heights[0];
         double minDifference = Math.abs(height - nearest);
 
@@ -153,14 +202,16 @@ public class App {
 
 //        double roiSurface = geographicTools.computeNonEuclideanSurface(SAA);
         RegionAccessComputer regionAccessComputer = new RegionAccessComputer(configurationsPath);
-        for (int inc = 45; inc < 100; inc++) {
-            Log.info("Running constellation coverage over SAA ... inc: " + inc + " degrees");
-            regionAccessComputer.setOutputPath(outputPath);
-            regionAccessComputer.getSatelliteList().get(0).getElements().setInclination(inc);
-//        regionAccessComputer.setSatelliteList(satelliteList);
-            regionAccessComputer.setROI(SAA);
-            regionAccessComputer.computeROIAccess();
-            Log.info("... done!");
+        for (double inc = 0; inc < 100; inc = inc + 5) {
+            for (double sma = 300 + 6371; sma < 2000 + 6371; sma = sma + 200) {
+                Log.info("Running constellation coverage over SAA ... inc: " + inc + " ° and sma = " + sma);
+                regionAccessComputer.setOutputPath(outputPath);
+                regionAccessComputer.getSatelliteList().get(0).getElements().setInclination(inc);
+                regionAccessComputer.getSatelliteList().get(0).getElements().setSemiMajorAxis(sma);
+                regionAccessComputer.setROI(SAA);
+                regionAccessComputer.computeROIAccess();
+                Log.info("... done!");
+            }
         }
 
     }
@@ -214,7 +265,7 @@ public class App {
             int id = 0;
 
             String line;
-            while((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 if (!line.startsWith("//") && line.length() > 0) {
                     String[] data = line.split(",");
                     satelliteList.add(new Satellite(id++, data[0], Double.parseDouble(data[1]), Double.parseDouble(data[2]), Double.parseDouble(data[3]), Double.parseDouble(data[4]), Double.parseDouble(data[5]), Double.parseDouble(data[6])));

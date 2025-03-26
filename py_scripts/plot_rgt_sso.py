@@ -18,7 +18,7 @@ scatter = ax.scatter(
     data["ND"], 
     data["height"], 
     data["inc"], 
-    c=data["avg_duration"]/(1000.0*60.0),
+    c=data["percentage_of_access"]*100.0,
     cmap="jet",
     marker='o', 
     s=6

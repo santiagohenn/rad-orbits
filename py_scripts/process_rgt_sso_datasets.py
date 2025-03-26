@@ -4,14 +4,14 @@ import json
 import csv
 
 all_satellites = constellation.Constellation()
-all_satellites.read_from_csv("./inputs/ssrgt_1030.csv")
+all_satellites.read_from_csv("./inputs/ssrgt_1030_AP8.csv")
 folder = "ssrgt_1030_AP8"
 
 tpo_threshold = 100.0
 
 for satellite in all_satellites.satellites:
 
-    # I'm dealing with just one satellite but need the constellation obj to get the hash
+    # I'm dealing with just one satellite each iteration but need the constellation obj to get the hash
     current_constellation = constellation.Constellation()
     current_constellation.add_satellite(satellite)
     hash = current_constellation.generate_hash_256()
