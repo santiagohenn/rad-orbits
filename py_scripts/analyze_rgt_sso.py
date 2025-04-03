@@ -1,9 +1,11 @@
 import csv
 from structures import constellation
 import numpy as np
+import math
 
 folder = "ssrgt_1030_AP8"
-scenario_timespan_ms = 864000 * 1000
+scenario_timespan_days = 20
+scenario_timespan_ms = scenario_timespan_days * 24 * 60 * 60
 
 all_satellites = constellation.Constellation()
 all_satellites.read_from_csv(f"./inputs/{folder}.csv")
@@ -26,19 +28,21 @@ for sat_idx, satellite in enumerate(all_satellites.satellites):
 
     print("Analizing ", hash)
 
-    # Load intervals from CSV
+    # Load data from CSV
     intervals = []
     with open(f"./outputs/intervals/{folder}/access_intervals_{hash}.csv", "r") as csv_file:
         reader = csv.DictReader(csv_file)
         for row in reader:
-            intervals.append((int(row["start_time"]), int(row["end_time"])))
+            intervals.append((int(row["start_time"]), int(row["end_time"]), float(row["fluence"])))
 
     # Ensure intervals are sorted
     intervals.sort()
 
     # Compute interval durations and waiting times
-    durations = [end - start for start, end in intervals]
+    durations = [end - start for start, end, fluence in intervals]
     waiting_times = [intervals[i][0] - intervals[i - 1][1] for i in range(1, len(intervals))]
+    fluence = [row[2] for row in intervals]
+    fluence_per_rep_cycle = (sum(fluence) / scenario_timespan_ms) * ND_NS[sat_idx][0];
 
     # Compute metrics
     metrics = {
@@ -53,8 +57,16 @@ for sat_idx, satellite in enumerate(all_satellites.satellites):
         "min_waiting_time": min(waiting_times) if waiting_times else None,
         "max_waiting_time": max(waiting_times) if waiting_times else None,
         "avg_waiting_time": sum(waiting_times) / len(waiting_times) if waiting_times else None,
-        "frequency": len(intervals),  # Number of intervals
+        "frequency": len(intervals),
+        "fluence": sum(fluence) / 1000.0,
+        "avg_fluence": sum(fluence)/len(fluence),
+        "fluence_rep": fluence_per_rep_cycle / 1000.0,
     }
+
+    # Truncate, otherwise spreadsheets break.
+    for k in metrics:
+         if isinstance(metrics[k], (float)):
+            metrics[k] = math.trunc(metrics[k] * 1000) / 1000
 
     #output_metrics.append([inc, metrics["percentage_of_access"], metrics["avg_duration"], metrics["min_waiting_time"], metrics["max_waiting_time"]])
     #output_metrics.append(metrics)
@@ -76,6 +88,9 @@ with open(output_file, "w", newline="") as csv_file:
         "max_waiting_time",
         "avg_waiting_time",
         "frequency",
+        "fluence",
+        "avg_fluence",
+        "fluence_rep",
     ]
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
     writer.writeheader()

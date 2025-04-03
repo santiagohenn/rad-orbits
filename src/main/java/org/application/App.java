@@ -32,7 +32,7 @@ public class App {
         String configurationsPath = "./inputs/config.rad.orbits.properties";
         String outputPath = "D:/rad-orbits/outputs/analysis/";
 
-        List<Satellite> allSsRgt = satellitesFromFile("./inputs/ssrgt_1030.csv");
+        List<Satellite> allSsRgt = satellitesFromFile("./inputs/ssrgt_1030_AP8_RAAN.csv");
         RegionAccessComputer regionAccessComputer = new RegionAccessComputer(configurationsPath);
         regionAccessComputer.setOutputPath(outputPath);
 
@@ -48,8 +48,7 @@ public class App {
             regionAccessComputer.setROI(ROI);
             regionAccessComputer.computeROMetrics();
             Log.info("... done!");
-            Log.info(counter + "/" + allSsRgt.size());
-            counter++;
+            Log.info(counter++ + "/" + allSsRgt.size());
         }
 
     }
@@ -129,17 +128,7 @@ public class App {
 
     public static List<double[]> getNearestSimplifiedModel(double height, double requiredLevel) {
 
-        int[] heights = {300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 1200, 1500, 1800, 2100};
-        int nearest = heights[0];
-        double minDifference = Math.abs(height - nearest);
-
-        for (int value : heights) {
-            double difference = Math.abs(height - value);
-            if (difference < minDifference) {
-                minDifference = difference;
-                nearest = value;
-            }
-        }
+        int nearest = getNearest(height);
 
         Log.info("Satellite height: " + height + " - Nearest model: " + nearest);
 
@@ -151,6 +140,24 @@ public class App {
 
         return SAA;
 
+    }
+
+    private static int getNearest(double height) {
+        int[] heights = {300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900,
+                950, 1000, 1050, 1100, 1150, 1200, 1250, 1300, 1350, 1400, 1450, 1500, 1550, 1600,
+                1650, 1700, 1750, 1800, 1850, 1900, 1950, 2000, 2050, 2100};
+
+        int nearest = heights[0];
+        double minDifference = Math.abs(height - nearest);
+
+        for (int value : heights) {
+            double difference = Math.abs(height - value);
+            if (difference < minDifference) {
+                minDifference = difference;
+                nearest = value;
+            }
+        }
+        return nearest;
     }
 
     public static List<double[]> getNearestModel(double height, double requiredLevel) {
